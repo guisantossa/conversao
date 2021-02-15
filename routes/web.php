@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CoinsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,8 +15,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('/convert');
 })->middleware('auth');
+
+Route::get('/convert', [CoinsController::class, 'index']);
+Route::get('/convert/{id}', [CoinsController::class, 'index']);
+Route::post('/dashboard', [CoinsController::class, 'store']);
+
+
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
