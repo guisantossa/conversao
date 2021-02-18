@@ -15,6 +15,7 @@
     <th scope="col">Moeda original</th>
     <th scope="col">Valor Convertido</th>
     <th scope="col">Moeda Convertida</th>
+    <th scope="col">Cotação</th>
     <th scope="col">Horario da Conversão</th>
     <th scope="col">usuário</th>
     </tr>
@@ -26,6 +27,7 @@
     <td>{{ $coin->moeda_original }}</td>
     <td>{{ number_format($coin->valor_convertido, 2, ',', '.') }}</td>
     <td>{{ $coin->moeda_convertida }}</td>
+    <td>{{$coin->moeda_original}} {{ $coin->valor_original/$coin->valor_convertido }}</td>
     <td>{{ date_format($coin->created_at, 'd/m/Y') }}</td>
     <td>{{ $coin->user()->get()->first()->name }}</td>
     </tr>
