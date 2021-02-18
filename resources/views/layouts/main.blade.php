@@ -3,6 +3,7 @@
     <head>
     <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <!-- Meta -->
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -35,10 +36,10 @@
                 <div class="collapse navbar-collapse" id="conteudoNavbarSuportado">
                     <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/dashboard">Conversão</a>
+                        <a class="nav-link" href="/convert">Conversão</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/log">Log</a>
+                        <a class="nav-link" href="/show">Log</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/user">usuario</a>

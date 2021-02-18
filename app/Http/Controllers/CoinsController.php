@@ -13,21 +13,16 @@ class CoinsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id = null)
+    public function index()
     {
-        $coins = Coin::all();
-        $coin = Coin::findOrFail($id);
-        return view('convert',['coins' => $coins, 'coin' =>$coin]);
+        $coins = Coin::orderBy("created_at", "DESC")->paginate(10);
+        return view('convert',['coins' => $coins]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function show()
     {
-        //
+        $coins = Coin::orderBy("created_at", "DESC")->paginate(20);
+        return view('show',['coins' => $coins]);
     }
 
     /**
@@ -38,62 +33,23 @@ class CoinsController extends Controller
      */
     public function store(Request $request)
     {
-        $json = file_get_contents('https://api.exchangeratesapi.io/latest?base='.$request->moeda_convertida);
+                
+        $json = file_get_contents('https://api.exchangeratesapi.io/latest?base='.$request->moeda_original);
         $rates = json_decode($json, true);
-        $conta = $request->valor_original*$rates["rates"][$request->moeda_original];
+        $conta = $request->valor_original*$rates["rates"][$request->moeda_convertida];
+        
         $coin = new Coin;
         $coin->user_id = auth()->user()->id;
         $coin->valor_original = $request->valor_original;
-        $coin->valor_convertido = round($request->valor_original*$rates["rates"][$request->moeda_original],2);
+        $coin->valor_convertido = round($conta,2);
         $coin->moeda_original = $request->moeda_original;
         $coin->moeda_convertida = $request->moeda_convertida;
 
         $coin->save();
-        return redirect('/convert/'.$coin->id);
-    }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $coin->valor_original = number_format((double)$coin->valor_original, 2, ',', '.');
+        $coin->valor_convertido = number_format((double)$coin->valor_convertido, 2, ',', '.');
+        $coin->user_id = auth()->user()->name;
+        return response()->json($coin);
     }
 }
