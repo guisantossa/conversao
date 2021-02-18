@@ -14,13 +14,12 @@ use App\Http\Controllers\CoinsController;
 |
 */
 
-Route::get('/', function () {
-    return view('/convert');
-})->middleware('auth');
 
-Route::get('/convert', [CoinsController::class, 'index']);
-Route::get('/convert/{id}', [CoinsController::class, 'index']);
-Route::post('/dashboard', [CoinsController::class, 'store']);
+Route::get('/convert', [CoinsController::class, 'index'])->middleware('auth');
+Route::get('/', [CoinsController::class, 'index'])->middleware('auth');
+Route::get('/convert/{id}', [CoinsController::class, 'index'])->middleware('auth');
+Route::post('/convert', [CoinsController::class, 'store'])->middleware('auth');
+Route::get('/show', [CoinsController::class, 'show'])->middleware('auth');
 
 
 
