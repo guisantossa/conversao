@@ -62,8 +62,7 @@
             <li class="breadcrumb-item active" aria-current="page">Log de Conversões</li>
         </ol>
     </nav>
-    @if (!empty($coins))
-        <table class="table table-borderless table-hover table-sm table-striped" id='convert'>
+    <table class="table table-borderless table-hover table-sm table-striped" id='convert'>
         <thead class='thead-light'>
             <tr>
             <th scope="col">Valor Original</th>
@@ -75,7 +74,8 @@
             </tr>
         </thead>
         <tbody>
-        @foreach($coins as $coin)
+    @if(!empty($coins ?? ''))
+        @foreach($coins ?? '' as $coin)
             <tr class='table-row'>
             <td>{{ number_format($coin->valor_original, 2, ',', '.') }}</td>
             <td>{{ $coin->moeda_original }}</td>
@@ -86,9 +86,13 @@
             </tr>
         @endforeach
         </tbody>
-        </table>
-@endif
-    <div class="d-flex justify-content-center">{{ $coins->links() }} </div>
+        <tfoot>
+            <tr><td colspan="6"><div class="d-flex justify-content-center">{{ $coins->links() }} </div></td></tr>
+        </tfoot>
+    @endif
+    </table>
+    
+    
 </div>
 
 @endsection
