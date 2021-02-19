@@ -33,3 +33,4 @@ php artisan migrate
 # Registrar um usuario para login
 http://dominio/register
 ```
+
