@@ -21,7 +21,7 @@
     </tr>
 </thead>
 <tbody>
-@foreach($coins as $coin)
+@foreach($coins ?? '' as $coin)
     <tr class='table-row'>
     <td>{{ number_format($coin->valor_original, 2, ',', '.') }}</td>
     <td>{{ $coin->moeda_original }}</td>

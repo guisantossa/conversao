@@ -23,6 +23,6 @@ Route::get('/show', [CoinsController::class, 'show'])->middleware('auth');
 
 
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
+Route::middleware(['auth:sanctum', 'verified'])->get('/', function () {
+    return view('convert');
+})->name('convert');

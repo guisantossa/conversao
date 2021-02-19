@@ -34,4 +34,3 @@ php artisan migrate
 http://dominio/register
 ```
 
-Pronto você ja esta pronto para usar sua aplicação
